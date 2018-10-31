@@ -2,6 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { Sample } from "../../lib/stories-common";
 
+import "./webcomponent";
 import Button from "./index";
 
 import "./index.css";
@@ -14,6 +15,11 @@ storiesOf("Button", module)
         Anchor
       </a>
       <Button>Button</Button>
+
+      <photon-button size="puffy"><marquee>Button 0</marquee></photon-button>
+      <photon-button size="micro">Button 1</photon-button>
+      <photon-button type="primary">Button 2</photon-button>
+    
     </Sample>
   ))
   .add("Primary", () => (

@@ -12,6 +12,7 @@ Object.keys(processEnv).forEach(key => {
 module.exports = {
   entry: {
     index: "./index",
+    webcomponents: "./webcomponents",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
