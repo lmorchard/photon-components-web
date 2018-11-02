@@ -1,62 +1,29 @@
-import {html, render} from "lit-html";
+import {html} from "lit-html";
+import {BaseElement} from "../../lib/webcomponents";
 import classNames from "classnames";
 
-const css = require("!raw-loader!./index.css");
+const css = require("!css-loader!./index.css").toString();
 
-class PhotonButton extends HTMLElement {
-  constructor() {
-    super();
-    this.shadow = this.attachShadow({ mode: "open" });
-    this.render();
-  }
-
+class PhotonButton extends BaseElement {
   static get observedAttributes() {
-    return ["type", "size"];
+    return ["onClick", "type", "size"];
   }
 
-  template = ({ type, size }) => html`
-    <style>
-      ${css}
-    </style>
-    <button class="${classNames([
+  template({ type, size }) {
+    const className = classNames([
       "button",
       type && `button--${type}`,
       size && `button--${size}`,
-    ])}"><slot></slot></button>
-  `;
-
-  render() {
-    render(this.template(this.props), this.shadow);
+    ]);
+    return html`
+      <style>
+        ${css}
+      </style>
+      <button @click=${this.props.onClick} class="${className}">
+        <slot></slot>
+      </button>
+    `;
   }
-
-  get props() {
-    return PhotonButton.observedAttributes.reduce(
-      (acc, name) => ({
-        ...acc,
-        [name]: this.getAttribute(name)
-      }),
-      {}
-    );
-  }
-
-  connectedCallback() {
-    console.log("CONNECTED");
-  }
-
-  disconnectedCallback() {
-    console.log("DISCONNECTED");
-  }
-
-  adoptedCallback() {
-    console.log("ADOPTED");
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    this.render();
-  }
-
-  // <photon-button tooltip="foo">Label</photon-button>
-
 }
 
 customElements.define("photon-button", PhotonButton);

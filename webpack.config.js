@@ -2,12 +2,8 @@ const path = require("path");
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const processEnv = {
-  NODE_ENV: process.env.NODE_ENV || "production",
-};
-Object.keys(processEnv).forEach(key => {
-  processEnv[key] =  JSON.stringify(process.env[key]);
-});
+const isProd = process.env.NODE_ENV === "production";
+const mode = isProd ? "production" : "none";
 
 module.exports = {
   entry: {
@@ -19,9 +15,12 @@ module.exports = {
     chunkFilename: "[name].chunk.js",
     filename: "[name].js",
   },
+  mode,
+  optimization: {
+    minimize: isProd,
+  },
   plugins: [
     new MiniCssExtractPlugin(),
-    new webpack.DefinePlugin({ "process.env": processEnv }),
   ],
   module: {
     rules: [
