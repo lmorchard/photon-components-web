@@ -4,12 +4,18 @@ import classNames from "classnames";
 const css = require("!raw-loader!./index.css");
 
 class PhotonButton extends HTMLElement {
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: "open" });
+    this.render();
+  }
+
   static get observedAttributes() {
     return ["type", "size"];
   }
 
-  render = ({ type, size }) => html`
-    <style type="text/css">
+  template = ({ type, size }) => html`
+    <style>
       ${css}
     </style>
     <button class="${classNames([
@@ -19,6 +25,10 @@ class PhotonButton extends HTMLElement {
     ])}"><slot></slot></button>
   `;
 
+  render() {
+    render(this.template(this.props), this.shadow);
+  }
+
   get props() {
     return PhotonButton.observedAttributes.reduce(
       (acc, name) => ({
@@ -27,12 +37,6 @@ class PhotonButton extends HTMLElement {
       }),
       {}
     );
-  }
-
-  constructor() {
-    super();
-    this.shadow = this.attachShadow({ mode: "open" });
-    render(this.render(this.props), this.shadow);
   }
 
   connectedCallback() {
@@ -48,7 +52,7 @@ class PhotonButton extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    render(this.render(this.props), this.shadow);
+    this.render();
   }
 
   // <photon-button tooltip="foo">Label</photon-button>
