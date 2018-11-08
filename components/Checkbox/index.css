@@ -1,63 +1,47 @@
-.checkbox {
-  position: relative;
-
-  /* TODO: Figure out if inline-block and 100% width the right thing for
-     providing consistent click target */
-  display: inline-block;
-  width: 100%;
+input[type="checkbox"] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--grey-90-a10);
+  border-radius: 2px;
+  border: 1px solid var(--grey-90-a30);
+  height: 16px;
+  margin-left: 0;
+  margin-right: 0;
+  margin: -2px 4px;
+  width: 16px;
 }
 
-.checkbox--disabled {
+input[type="checkbox"]:disabled {
   opacity: .4;
 }
 
-.checkbox__field {
-  opacity: 0;
-  padding-right: 4px;
-  width: 16px;
-  height: 16px;
-}
-
-.checkbox__label::after {
-  position: absolute;
-  cursor: pointer;
-  left: 2px;
-  bottom: 2px;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border-radius: 2px;
-  margin-left: 0;
-  margin-right: 0;
-  content: "";
-  background-color: var(--grey-90-a10);
-  border: 1px solid var(--grey-90-a30);
-}
-
-.checkbox__label:hover::after {
+input[type="checkbox"]:hover {
   background-color: var(--grey-90-a20);
 }
 
-.checkbox__label:active::after {
+input[type="checkbox"]:active {
   background-color: var(--grey-90-a30);
 }
 
-.checkbox__field:focus + .checkbox__label::after {
+input[type="checkbox"]:focus {
   border: none;
-  left: 3px;
-  bottom: 3px;
   box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, .3);
 }
 
-.checkbox__field:checked + .checkbox__label::after {
+input[type="checkbox"]:checked {
   background-color: var(--blue-60);
   background-image: url(./checkbox-check-16.svg);
+  background-position: center center;
 }
 
-.checkbox__field:checked + .checkbox__label:hover::after {
+input[type="checkbox"]:checked:hover {
   background-color: var(--blue-70);
 }
 
-.checkbox__field:checked + .checkbox__label:active::after {
+input[type="checkbox"]:checked:active {
   background-color: var(--blue-80);
+}
+
+label.checkbox--disabled > span {
+  opacity: .4;
 }
